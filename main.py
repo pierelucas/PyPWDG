@@ -27,9 +27,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+#
+# Module
+#
 import random
 import string
 import sys
+import re
 
 banner_txt = """
 [+] RANDOM PASSWORD GENERATOR [+]
@@ -65,28 +69,82 @@ def rnd_lowercase(*, stringlen, value):
         letters = string.ascii_lowercase
         s = ""
         pwd = s.join(random.choice(letters) for i in range(stringlen))
-        print(pwd)
+        print("Password » " + pwd)
+        print("Wordlist » " + password_chars(pwd))
+        print("-" * 60)
 
 def rnd_upperandlower(*, stringlen, value):
     for i in range(value):
         letters = string.ascii_letters
         s = ""
         pwd = s.join(random.choice(letters) for i in range(stringlen))
-        print(pwd)
+        print("Password » " + pwd)
+        print("Wordlist » " + password_chars(pwd))
+        print("-" * 60)
 
 def rnd_stringdigit(*, stringlen, value):
     for i in range(value):
         letters = string.ascii_letters + string.digits
         s = ""
         pwd = s.join(random.choice(letters) for i in range(stringlen))
-        print(pwd)
+        print("Password » " + pwd)
+        print("Wordlist » " + password_chars(pwd))
+        print("-" * 60)
 
 def rnd_stringspecial(*, stringlen, value):
     for i in range(value):
         letters = string.ascii_letters + string.digits + string.punctuation
         s = ""
         pwd = s.join(random.choice(letters) for i in range(stringlen))
-        print(pwd)
+        print("Password » " + pwd)
+        print("Wordlist » " + password_chars(pwd))
+        print("-" * 60)
+
+def password_chars(pwd):
+    word_list = []
+    pwd_index = list(pwd)
+
+    d = {
+        "A":"Anaconda", "a":"anaconda",
+        "B":"Busty", "b":"busty",
+        "C":"Cute", "c":"cute",
+        "D":"Dobby", "d":"dobby",
+        "E":"Ether", "e":"ether",
+        "F":"Fidget", "f":"fidget",
+        "G":"Gas", "g":"gas",
+        "H":"House", "h":"house",
+        "I":"Island", "i":"island",
+        "J":"Jupyter", "j":"jupyter",
+        "K":"Kleeve", "k":"kleeve",
+        "L":"Lost", "l":"lost",
+        "M":"Mustang", "m":"mustang",
+        "N":"Noris", "n":"noris",
+        "O":"Octal", "o":"octal",
+        "P":"Pussy", "p":"pussy",
+        "Q":"Quarter", "q":"quarter",
+        "R":"Roller", "r":"roller",
+        "S":"Sasquatch", "s":"sasquatch",
+        "T":"Table", "t":"table",
+        "U":"Uuid", "u":"uuid",
+        "V":"Victory", "v":"victory",
+        "W":"Walt", "w":"walt",
+        "X":"Xenon", "x":"xenon",
+        "Y":"Yupiter", "y":"yupiter",
+        "Z":"Zuse", "z":"zuse"
+    }
+
+    for i in pwd_index:
+        try:
+            x = lambda i: re.findall("\w", i)
+            if x(i):
+                word = d[i]
+                word_list.append(word)
+            else: word_list.append(i)
+        except KeyError: word_list.append(i)
+
+    s = " "
+    mret = s.join(word_list)
+    return mret
 
 def run():
     out()
